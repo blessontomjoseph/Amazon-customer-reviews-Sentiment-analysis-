@@ -2,7 +2,7 @@ import csv
 import numpy as np
 import matplotlib.pyplot as plt
 
-import project1 as p1
+from sentiment_analy import project1 as p1
 import sys
 
 if sys.version_info[0] < 3:
@@ -165,3 +165,4 @@ def tune_pegasos_L(best_T, *args):
 def most_explanatory_word(theta, wordlist):
     """Returns the word associated with the bag-of-words feature having largest weight."""
     return [word for (theta_i, word) in sorted(zip(theta, wordlist))[::-1]]
+

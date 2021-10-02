@@ -1,6 +1,7 @@
 from string import punctuation, digits
 import numpy as np
 import random
+import pandas as pd
 
 # Part I
 
@@ -269,7 +270,6 @@ def pegasos(feature_matrix, labels, T, L):
             theta, theta_0 = pegasos_single_step_update(feature_matrix[i],labels[i],L,eta,theta,theta_0)
     return theta,theta_0
 
-
     raise NotImplementedError
 
 # Part II
@@ -293,6 +293,16 @@ def classify(feature_matrix, theta, theta_0):
     be considered a positive classification.
     """
     # Your code here
+    output=[]
+    for i in feature_matrix:
+        z=(theta@i)+theta_0
+        if z>0:
+            output.append(1)
+        else:
+            output.append(-1)
+    return np.array(output)
+
+
     raise NotImplementedError
 
 
@@ -329,6 +339,13 @@ def classifier_accuracy(
     accuracy of the trained classifier on the validation data.
     """
     # Your code here
+    theta,theta_0=classifier(train_feature_matrix, train_labels, **kwargs)
+    train_out=classify(train_feature_matrix, theta, theta_0)
+    valid_out=classify(val_feature_matrix,theta,theta_0)
+    a=accuracy(train_out,train_labels)
+    b=accuracy(valid_out,val_labels)
+    return a,b
+
     raise NotImplementedError
 
 
@@ -362,6 +379,32 @@ def bag_of_words(texts):
     return dictionary
 
 
+
+# this next two parts are for the last problem project_1
+# code to call the stop_words.txt to manipulate tthe dictionary(personal codes for the problem)
+
+
+
+
+# bag of words 2 for dictionary manipulation and performance evaluations on different settings
+def bag_of_words_2(texts):
+    dictionary = {}  # maps word to unique index
+
+    stop_words = ['i']
+    s_W = pd.read_csv(r"C:\Users\USER\PycharmProjects\project_1\sentiment_analy\stopwords.txt")
+    for i in s_W['i']:
+        stop_words.append(i)
+    stop_words_removed=[]
+    for text in texts:
+        word_list = extract_words(text)
+        for word in word_list:
+            if word not in stop_words:
+                stop_words_removed.append(word)
+        for word in stop_words_removed:
+            if word not in dictionary:
+                dictionary[word] = len(dictionary)
+    return dictionary
+
 def extract_bow_feature_vectors(reviews, dictionary):
     """
     Inputs a list of string reviews
@@ -385,9 +428,35 @@ def extract_bow_feature_vectors(reviews, dictionary):
     return feature_matrix
 
 
+def extract_bow_feature_vectors_2(reviews, dictionary):
+    """
+    Inputs a list of string reviews
+    Inputs the dictionary of words as given by bag_of_words
+    Returns the bag-of-words feature matrix representation of the data.
+    The returned matrix is of shape (n, m), where n is the number of reviews
+    and m the total number of entries in the dictionary.
+
+    Feel free to change this code as guided by Problem 9
+    """
+    # Your code here
+
+    num_reviews = len(reviews)
+    feature_matrix = np.zeros([num_reviews, len(dictionary)])
+
+    for i, text in enumerate(reviews):
+        word_list = extract_words(text)
+        for word in word_list:
+            if word in dictionary:
+                feature_matrix[i, dictionary[word]] += 1
+    return feature_matrix
+
+
+
 def accuracy(preds, targets):
     """
     Given length-N vectors containing predicted and target labels,
     returns the percentage and number of correct predictions.
     """
     return (preds == targets).mean()
+
+
