@@ -6,9 +6,9 @@ import numpy as np
 # Data loading. There is no need to edit code in this section.
 #-------------------------------------------------------------------------------
 
-train_data = utils.load_data('reviews_train.tsv')
-val_data = utils.load_data('reviews_val.tsv')
-test_data = utils.load_data('reviews_test.tsv')
+train_data = utils.load_data(r'C:\Users\USER\PycharmProjects\project_1\sentiment_analy\reviews_train.tsv')
+val_data = utils.load_data(r'C:\Users\USER\PycharmProjects\project_1\sentiment_analy\reviews_val.tsv')
+test_data = utils.load_data(r'C:\Users\USER\PycharmProjects\project_1\sentiment_analy\reviews_test.tsv')
 
 train_texts, train_labels = zip(*((sample['text'], sample['sentiment']) for sample in train_data))
 val_texts, val_labels = zip(*((sample['text'], sample['sentiment']) for sample in val_data))
@@ -130,12 +130,12 @@ test_texts, test_labels = zip(*((sample['text'], sample['sentiment']) for sample
 #for the second quest use bag of words _@ and extract bow features_2  and manipulate the code below
 # now the code must be as  i have last implemented it and left it
 
-dictionary_2 = p1.bag_of_words_2(train_texts)
-
-train_bow_features_2 = p1.extract_bow_feature_vectors_2(train_texts, dictionary_2)
-val_bow_features_2 = p1.extract_bow_feature_vectors_2(val_texts, dictionary_2)
-test_bow_features_2 = p1.extract_bow_feature_vectors_2(test_texts, dictionary_2)
-theta_2,theta_0_2=p1.pegasos(train_bow_features_2,train_labels,T=25,L=0.0100)
-preds_2=p1.classify(test_bow_features_2,theta_2,theta_0_2)
-accuracy=p1.accuracy(preds_2,test_labels)
-print(accuracy)
+# dictionary_2 = p1.bag_of_words_2(train_texts)
+#
+# train_bow_features_2 = p1.extract_bow_feature_vectors_2(train_texts, dictionary_2)
+# val_bow_features_2 = p1.extract_bow_feature_vectors_2(val_texts, dictionary_2)
+# test_bow_features_2 = p1.extract_bow_feature_vectors_2(test_texts, dictionary_2)
+# theta_2,theta_0_2=p1.pegasos(train_bow_features_2,train_labels,T=25,L=0.0100)
+# preds_2=p1.classify(test_bow_features_2,theta_2,theta_0_2)
+# accuracy=p1.accuracy(preds_2,test_labels)
+# print(accuracy)

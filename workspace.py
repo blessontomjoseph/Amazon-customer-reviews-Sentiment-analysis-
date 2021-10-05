@@ -1,16 +1,15 @@
-# from sentiment_analy.utils import load_data
-# stop_data=load_data(r"C:\Users\USER\PycharmProjects\project_1\sentiment_analy\stopwords.txt")
-# print(stop_data)
-# OrderedDict()=stop_data
-# for key, value in od.items():
-#     print(key, value)
+import numpy as np
+from sentiment_analy import utils
+from sentiment_analy import project1 as p1
+from files import fea_eng_functions as fea
+dictionary= p1.bag_of_words(fea.train_texts)
 
-import pandas as pd
-stop_words=['i']
-s_W=pd.read_csv(r"C:\Users\USER\PycharmProjects\project_1\sentiment_analy\stopwords.txt")
-for i in s_W['i']:
-    stop_words.append(i)
+train_bow_features= fea.extract_bow_features_4(fea.train_texts, dictionary)
+val_bow_features = fea.extract_bow_features_4(fea.val_texts, dictionary)
+test_bow_features= fea.extract_bow_features_4(fea.test_texts, dictionary)
+theta,theta_0=p1.pegasos(train_bow_features,fea.train_labels,T=25,L=0.0100)
+preds=p1.classify(test_bow_features,theta,theta_0)
+accuracy=p1.accuracy(preds,fea.test_labels)
+print(accuracy)
 
-
-
-def stop_words_import(path_data):
+# print(train_bow_features)
